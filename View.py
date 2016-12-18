@@ -9,12 +9,17 @@ from PySide.QtCore import *
 
 
 class View(QWidget):
-
+    """
+    The View Class of the Game
+    """
     heigth = 500
     width = 500
     radius = 5
 
     def __init__(self):
+        """
+        Konstruktor
+        """
         super(View, self).__init__()
 
         self.pointUI()
@@ -22,6 +27,10 @@ class View(QWidget):
         self.pointlist = []
 
     def pointUI(self):
+        """
+        Ui Method for painting the Points
+        :return: None
+        """
         self.heigth = View.heigth
         self.width = View.width
 
@@ -49,7 +58,11 @@ class View(QWidget):
         self.show()
 
     def paintEvent(self, event):
-
+        """
+        paintEvent for painting the Points
+        :param event:
+        :return:
+        """
         #painter.drawEllipse(100, 100, 300, 300)
 
         self.painter.begin(self)
@@ -71,6 +84,11 @@ class View(QWidget):
         self.painter.end()
 
     def closeEvent(self, event):
+        """
+        closeEvent for closing the event
+        :param event:
+        :return:
+        """
         for p in self.pointlist:
             p.join()
 

@@ -11,7 +11,13 @@ from Controller import Controller
 
 
 class Main(QtGui.QApplication):
+    """
+    The App for starting the Program
+    """
     def __init__(self):
+        """
+        Konstruktor
+        """
         super().__init__(sys.argv)
         self.Controller = Controller()
 
