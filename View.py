@@ -15,7 +15,8 @@ class View(QWidget):
     """
     heigth = 500
     width = 500
-    radius = 5
+    radius = randint(0, 10)
+
 
     def __init__(self):
         """
@@ -56,8 +57,8 @@ class View(QWidget):
         self.buttonNew.show()
         self.buttonDel.show()
 
+        self.setFixedSize(500, 500)
 
-        self.setFixedSize(self.width, self.heigth)
         self.show()
 
     def paintEvent(self, event):
@@ -74,19 +75,11 @@ class View(QWidget):
 
         pen.setWidth(5)
 
-        r = randint(0, 255)
-        g = randint(0, 255)
-        b = randint(0, 255)
-        pen.setColor(QColor(r, g, b))
-
-
-
         self.painter.setPen(pen)
 
-
-
         for p in self.pointlist:
-            self.painter.drawEllipse(p.x.value, p.y.value, 5, 5)
+            self.painter.setPen(QColor(p.c[0], p.c[1], p.c[2]))
+            self.painter.drawEllipse(p.x.value, p.y.value, p.radius.value, p.radius.value)
 
         self.update()
         self.painter.end()

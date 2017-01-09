@@ -34,8 +34,10 @@ class Controller(Process):
         """
         x = randint(1, 499)
         y = randint(1, 299)
+        radius = randint(5, 30)
+        c = [randint(0, 255), randint(0, 255), randint(0, 255)]
 
-        point = Point(x, y)
+        point = Point(x, y, radius, c)
         point.start()
 
         self.view.pointlist.append(point)
@@ -60,7 +62,7 @@ class Point(Process):
     """
     Point class using multiprocessing
     """
-    def __init__(self, x, y):
+    def __init__(self, x, y, radius, c):
         """
         Konstruktor of Point class
         :param x: x Value of Point
@@ -70,10 +72,13 @@ class Point(Process):
         self.x = Value("i", x)
         self.y = Value("i", y)
 
+        self.radius = Value("i", radius)
+        self.c = Array("i", c)
+
         self.directionx = randint(0, 1)
         self.directiony = randint(0, 1)
 
-        self.speed = randint(5, 10)
+        self.speed = randint(5, 20)
 
         self.closing = Value("b", False)
 
@@ -105,7 +110,7 @@ class Point(Process):
             if self.x.value <= 0 + (View.radius):
                 self.directionx = 0
 
-            if self.y.value >= View.heigth - (5 + View.radius):
+            if self.y.value >= View.heigth - (10 + View.radius):
                 self.directiony = 1
 
             if self.y.value <= 0 + (View.radius):
