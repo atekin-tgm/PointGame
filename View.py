@@ -6,6 +6,7 @@
 
 from PySide.QtGui import *
 from PySide.QtCore import *
+from random import randint
 
 
 class View(QWidget):
@@ -36,6 +37,8 @@ class View(QWidget):
 
         self.setWindowTitle("PointGame")
         self.setObjectName("Widget")
+
+        self.setStyleSheet("QWidget#Widget {background-color: white}")
 
         self.painter = QPainter()
 
@@ -70,7 +73,11 @@ class View(QWidget):
         pen = QPen()
 
         pen.setWidth(5)
-        pen.setColor(Qt.red)
+
+        r = randint(0, 255)
+        g = randint(0, 255)
+        b = randint(0, 255)
+        pen.setColor(QColor(r, g, b))
 
 
 
@@ -81,6 +88,7 @@ class View(QWidget):
         for p in self.pointlist:
             self.painter.drawEllipse(p.x.value, p.y.value, 5, 5)
 
+        self.update()
         self.painter.end()
 
     def closeEvent(self, event):

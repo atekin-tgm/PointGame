@@ -23,7 +23,9 @@ class Controller(Process):
         self.view.show()
 
         self.view.buttonNew.clicked.connect(self.newPoint)
+        self.view.buttonNew.clicked.connect(self.view.update)
         self.view.buttonDel.clicked.connect(self.delPoint)
+        self.view.buttonDel.clicked.connect(self.view.update)
 
     def newPoint(self):
         """
@@ -68,12 +70,12 @@ class Point(Process):
         self.x = Value("i", x)
         self.y = Value("i", y)
 
-        self.directionx = Value(0, 1)
-        self.directiony = Value(0, 1)
+        self.directionx = randint(0, 1)
+        self.directiony = randint(0, 1)
 
-        self.speed = randint(1, 5)
+        self.speed = randint(5, 10)
 
-        self.closing = Value("50", False)
+        self.closing = Value("b", False)
 
     def join(self, timeout=None):
         self.closing.value = True
@@ -88,23 +90,25 @@ class Point(Process):
         while not self.closing.value:
 
             if self.directionx == 0:
-                self.x.value += -1 * self.speed
+                self.x.value += 1 * self.speed
             else:
+                self.x.value += -1 * self.speed
+
+            if self.directiony == 0:
                 self.y.value += 1 * self.speed
+            else:
+                self.y.value += -1 * self.speed
 
-            if self.x.value >= View.width - (View.radius + 5):
-                self.directionx = 0
-
-
-            if self.x.value <= View.radius:
+            if self.x.value >= View.width - (5 + View.radius):
                 self.directionx = 1
 
+            if self.x.value <= 0 + (View.radius):
+                self.directionx = 0
 
-            if self.y.value <= View.radius:
+            if self.y.value >= View.heigth - (5 + View.radius):
                 self.directiony = 1
 
-
-            if self.y.value >= View.heigth - (50 + View.radius):
+            if self.y.value <= 0 + (View.radius):
                 self.directiony = 0
 
             time.sleep(0.05)
